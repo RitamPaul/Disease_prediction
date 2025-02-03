@@ -1,4 +1,6 @@
 import streamlit as st
+import numpy as np
+import pickle
 
 st.set_page_config(
     page_title='Prediction of Disease Outbreaks',
@@ -6,6 +8,30 @@ st.set_page_config(
     layout='wide',
     initial_sidebar_state='expanded'
 )
+
+if 'diabetesModel' not in st.session_state:
+    with open('models\Diabetes\DecisionTree_notUndersampled.pkl', 'rb') as f:
+        st.session_state['diabetesModel'] = pickle.load(f)
+
+if 'diabetesScaler' not in st.session_state:
+    with open('models\Diabetes\MinMaxScaler_notUndersampled.pkl', 'rb') as f:
+        st.session_state['diabetesScaler'] = pickle.load(f)
+
+if 'heartModel' not in st.session_state:
+    with open('models\HeartDisease\KNN_beforeUndersampled.pkl', 'rb') as f:
+        st.session_state['heartModel'] = pickle.load(f)
+
+if 'heartScaler' not in st.session_state:
+    with open('models\HeartDisease\StandardScaler_beforeUndersampled.pkl', 'rb') as f:
+        st.session_state['heartScaler'] = pickle.load(f)
+
+if 'parkinsonsModel' not in st.session_state:
+    with open('models\Parkinsons\RandomForest_Undersampled.pkl', 'rb') as f:
+        st.session_state['parkinsonsModel'] = pickle.load(f)
+
+if 'parkinsonsScaler' not in st.session_state:
+    with open('models\Parkinsons\MinMaxScaler_Undersampled.pkl', 'rb') as f:
+        st.session_state['parkinsonsScaler'] = pickle.load(f)
 
 if 'page' not in st.session_state:
     st.session_state['page']='diabetes'
@@ -19,7 +45,7 @@ def diabetes_page():
     with left:
         pregnancy_count = st.number_input(
             label='**Number of Pregnancies**',
-            min_value=0,
+            min_value=0.0,
             placeholder='Enter pregnancy count',
         )
         skin_thickness = st.number_input(
@@ -78,15 +104,18 @@ def diabetes_page():
         type='secondary',
     )
     if(btn):
-        st.progress(50, text=f'**{50}%**')
-        st.success(f'''
-            **Nice 👍🏻** \n
-            pregnancy count:- {str(pregnancy_count).center(10,'-')}, glocose level:- {str(glucose_level).center(10,'-')}, blood pressure:- {str(blood_pressure).center(10,'-')},\n
-            skin thickness:- {str(skin_thickness).center(10,'-')}, insulin level:- {str(insulin_level).center(10,'-')}, bmi value:- {str(bmi).center(10,'-')},\n
-            diabetes predigree function value:- {str(diabetes_pedigree).center(10,'-')}, age:- {str(age).center(10,'-')}
-        ''')
-        st.balloons()
-        st.toast('**Good job!**', icon='🤩')
+        vars = [pregnancy_count, glucose_level, blood_pressure, skin_thickness, insulin_level, bmi, diabetes_pedigree, age]
+        user_input = [float(x) for x in vars]
+        user_input_array = np.array(user_input).reshape(1, -1)
+        model = st.session_state['diabetesModel']
+        scaler = st.session_state['diabetesScaler']
+        scaled_input = scaler.transform(user_input_array)
+        prediction = model.predict(scaled_input)
+        result = prediction[0]
+        if(result):
+            st.success('**Result : You are Diabetic**')
+        else:
+            st.success('**Result : You are not Diabetic**')
 
 def heart_disease_page():
     st.title('**Heart Disease Prediction using ML**')
@@ -102,12 +131,12 @@ def heart_disease_page():
         )
         rbp = st.number_input(
             label='**Resting Blood Pressure**',
-            min_value=0,
+            min_value=0.0,
             placeholder='Enter your resting blood pressure',
         )
         recg = st.number_input(
             label='**Resting Electrocardiographic results**',
-            min_value=0,
+            min_value=0.0,
             placeholder='Enter your resting ecg value',
         )
         stdep = st.number_input(
@@ -130,7 +159,7 @@ def heart_disease_page():
         )
         schol = st.number_input(
             label='**Serum Cholestrol in mg/dl**',
-            min_value=0,
+            min_value=0.0,
             placeholder='Enter your serum cholestrol level',
         )
         maxhrate = st.number_input(
@@ -140,7 +169,7 @@ def heart_disease_page():
         )
         slope = st.number_input(
             label='**Slope of the peak exercise ST segment**',
-            min_value=0,
+            min_value=0.0,
             placeholder='Enter the slope value',
         )
     with right:
@@ -151,17 +180,17 @@ def heart_disease_page():
         )
         fbs = st.number_input(
             label='**Fasting Blood Sugar > 120 md/dl**',
-            min_value=120,
+            min_value=0.0,
             placeholder='Enter your fasting blood sugar level',
         )
         exang = st.number_input(
             label='**Exercise induced Angina**',
-            min_value=0,
+            min_value=0.0,
             placeholder='Enter your exang value',
         )
         majorvessels = st.number_input(
             label='**Major vessels colored by fluoroscopy**',
-            min_value=0,
+            min_value=0.0,
             placeholder='Enter your major vessels',
         )
 
@@ -171,12 +200,18 @@ def heart_disease_page():
         type='secondary',
     )
     if(btn):
-        st.progress(50, text=f'**{50}%**')
-        st.success(f'''
-            **Nice 👍🏻**
-        ''')
-        st.balloons()
-        st.toast('**Good job!**', icon='🤩')
+        vars = [age, sex, cpain, rbp, schol, fbs, recg, maxhrate, exang, stdep, slope, majorvessels, thal]
+        user_input = [float(x) for x in vars]
+        user_input_array = np.array(user_input).reshape(1, -1)
+        model = st.session_state['heartModel']
+        scaler = st.session_state['heartScaler']
+        scaled_input = scaler.transform(user_input_array)
+        prediction = model.predict(scaled_input)
+        result = prediction[0]
+        if(result):
+            st.success('**Result : You have heart Disease**')
+        else:
+            st.success('**Result : You don\'t have Heart Disease**')
 
 def parkinsons_page():
     st.title('**Parkinsons Disease Prediction using ML**')
@@ -218,12 +253,19 @@ def parkinsons_page():
         type='secondary',
     )
     if(btn):
-        st.progress(50, text=f'**{50}%**')
-        st.success(f'''
-            **Nice 👍🏻**
-        ''')
-        st.balloons()
-        st.toast('**Good job!**', icon='🤩')
+        vars = [mdvp11, mdvp12, mdvp13, mdvp14, mdvp15, mdvp21, mdvp22, jitter, mdvp24, mdvp25, shimmer31, shimmer32, mdvp33, shimmer34, nhr, hnr, rpde, dfa, spread1, spread2, d2, ppe]
+        user_input = [eval(x) for x in vars]
+        user_input = [float(x) for x in user_input]
+        user_input_array = np.array(user_input).reshape(1, -1)
+        model = st.session_state['parkinsonsModel']
+        scaler = st.session_state['parkinsonsScaler']
+        scaled_input = scaler.transform(user_input_array)
+        prediction = model.predict(scaled_input)
+        result = prediction[0]
+        if(result):
+            st.success('**Result : You have Parkinson\'s Disease**')
+        else:
+            st.success('**Result : You don\'t have Parkinson\'s Disease**')
 
 if(st.session_state['page']=='diabetes'):
     diabetes_page()

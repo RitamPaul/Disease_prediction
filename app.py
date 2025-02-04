@@ -10,27 +10,27 @@ st.set_page_config(
 )
 
 if 'diabetesModel' not in st.session_state:
-    with open('models\Diabetes\DecisionTree_notUndersampled.pkl', 'rb') as f:
+    with open('models/Diabetes/DecisionTree_notUndersampled.pkl', 'rb') as f:
         st.session_state['diabetesModel'] = pickle.load(f)
 
 if 'diabetesScaler' not in st.session_state:
-    with open('models\Diabetes\MinMaxScaler_notUndersampled.pkl', 'rb') as f:
+    with open('models/Diabetes/MinMaxScaler_notUndersampled.pkl', 'rb') as f:
         st.session_state['diabetesScaler'] = pickle.load(f)
 
 if 'heartModel' not in st.session_state:
-    with open('models\HeartDisease\KNN_beforeUndersampled.pkl', 'rb') as f:
+    with open('models/HeartDisease/KNN_beforeUndersampled.pkl', 'rb') as f:
         st.session_state['heartModel'] = pickle.load(f)
 
 if 'heartScaler' not in st.session_state:
-    with open('models\HeartDisease\StandardScaler_beforeUndersampled.pkl', 'rb') as f:
+    with open('models/HeartDisease/StandardScaler_beforeUndersampled.pkl', 'rb') as f:
         st.session_state['heartScaler'] = pickle.load(f)
 
 if 'parkinsonsModel' not in st.session_state:
-    with open('models\Parkinsons\RandomForest_Undersampled.pkl', 'rb') as f:
+    with open('models/Parkinsons/RandomForest_Undersampled.pkl', 'rb') as f:
         st.session_state['parkinsonsModel'] = pickle.load(f)
 
 if 'parkinsonsScaler' not in st.session_state:
-    with open('models\Parkinsons\MinMaxScaler_Undersampled.pkl', 'rb') as f:
+    with open('models/Parkinsons/MinMaxScaler_Undersampled.pkl', 'rb') as f:
         st.session_state['parkinsonsScaler'] = pickle.load(f)
 
 if 'page' not in st.session_state:

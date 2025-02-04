@@ -179,7 +179,7 @@ def heart_disease_page():
             placeholder='Enter your ches pain type',
         )
         fbs = st.number_input(
-            label='**Fasting Blood Sugar > 120 md/dl**',
+            label='**Fasting Blood Sugar > 120 mg/dl**',
             min_value=0.0,
             placeholder='Enter your fasting blood sugar level',
         )

@@ -45,19 +45,20 @@ def diabetes_page():
     with left:
         pregnancy_count = st.number_input(
             label='**Number of Pregnancies**',
-            min_value=0.0,
+            value=None,
+            step=1,
             placeholder='Enter pregnancy count',
         )
         skin_thickness = st.number_input(
             label='**Skin Thickness value**',
-            min_value=0.0,
+            value=None,
             step=0.001,
             format='%0.3f',
             placeholder='Enter skin thickness',        
         )
         diabetes_pedigree = st.number_input(
             label='**Diabetes Pedigree function value**',
-            min_value=0.0,
+            value=None,
             step=0.001,
             format='%0.3f',
             placeholder='Enter diabetes pedigree function value',
@@ -65,34 +66,34 @@ def diabetes_page():
     with center:
         glucose_level = st.number_input(
             label='**Glucose Level**',
-            min_value=0.0,
+            value=None,
             step=0.001,
             format='%0.3f',
             placeholder='Enter glucose level',
         )
         insulin_level = st.number_input(
             label='**Insulin Level**',
-            min_value=0.0,
+            value=None,
             step=0.001,
             format='%0.3f',
             placeholder='Enter insulin level',
         )
         age = st.number_input(
             label='**Age of the Person**',
-            min_value=0,
+            value=None,
             placeholder='Enter age of the person',
         )
     with right:
         blood_pressure = st.number_input(
             label='**Blood Pressure value**',
-            min_value=0.0,
+            value=None,
             step=0.001,
             format='%0.3f',
             placeholder='Enter blood pressure',
         )
         bmi = st.number_input(
             label='**BMI value**',
-            min_value=0.0,
+            value=None,
             step=0.1,
             format='%0.1f',
             placeholder='Enter BMI value',
@@ -126,71 +127,71 @@ def heart_disease_page():
     with left:
         age = st.number_input(
             label='**Age**',
-            min_value=0,
+            value=None,
             placeholder='Enter your age',
         )
         rbp = st.number_input(
             label='**Resting Blood Pressure**',
-            min_value=0.0,
+            value=None,
             placeholder='Enter your resting blood pressure',
         )
         recg = st.number_input(
             label='**Resting Electrocardiographic results**',
-            min_value=0.0,
+            value=None,
             placeholder='Enter your resting ecg value',
         )
         stdep = st.number_input(
             label='**ST depression induced by exercise**',
-            min_value=0.0,
+            value=None,
             step=0.1,
             format='%0.1f',
             placeholder='Enter your st depression value',
         )
         thal = st.number_input(
             label='**Thal : 0=Normal; 1=Fixed defect; 2=Reversable defect**',
-            min_value=0,
-            placeholder='Enter age of the person',
+            value=None,
+            placeholder='Enter thal value',
         )
     with center:
         sex = st.number_input(
             label='**Sex**',
-            min_value=0,
+            value=None,
             placeholder='Enter your gender',
         )
         schol = st.number_input(
             label='**Serum Cholestrol in mg/dl**',
-            min_value=0.0,
+            value=None,
             placeholder='Enter your serum cholestrol level',
         )
         maxhrate = st.number_input(
             label='**Maximum Heart rate achieved**',
-            min_value=0,
+            value=None,
             placeholder='Enter your max heart rate',
         )
         slope = st.number_input(
             label='**Slope of the peak exercise ST segment**',
-            min_value=0.0,
+            value=None,
             placeholder='Enter the slope value',
         )
     with right:
         cpain = st.number_input(
             label='**Chest Pain types**',
-            min_value=0,
+            value=None,
             placeholder='Enter your ches pain type',
         )
         fbs = st.number_input(
             label='**Fasting Blood Sugar > 120 mg/dl**',
-            min_value=0.0,
+            value=None,
             placeholder='Enter your fasting blood sugar level',
         )
         exang = st.number_input(
             label='**Exercise induced Angina**',
-            min_value=0.0,
+            value=None,
             placeholder='Enter your exang value',
         )
         majorvessels = st.number_input(
             label='**Major vessels colored by fluoroscopy**',
-            min_value=0.0,
+            value=None,
             placeholder='Enter your major vessels',
         )
 
